@@ -1,0 +1,21 @@
+<h1><%= @user.name %></h1>
+<h3>Email: <%= @user.email %></<h3>
+<p>
+  Age: <%= @user.age %>
+</p>
+
+<table>
+  <tr>
+    <th>Resume file</th>
+    <th></th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= resume.name %></td>
+      <td><%= link_to 'Destroy', resume_path(resume),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,22 @@
+<%= form_with scope: :user, url: users_path, local: true do |form| %>
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %>
+  </p>
+
+  <p>
+    <%= form.label :age %><br>
+    <%= form.text_field :age %>
+  </p>
+
+  <%= form.file_field :attachments, multiple: false, direct_upload: true %>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

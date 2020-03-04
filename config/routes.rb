@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'resumes#index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -12,4 +12,9 @@ Rails.application.routes.draw do
   #   resources :products
 
   resources :resumes
+  resources :users
+
+  root 'resumes#index'
+
 end
+1

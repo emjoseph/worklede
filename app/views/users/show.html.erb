@@ -1,0 +1,17 @@
+<h1><%= @user.name %></h1>
+<h3>Email: <%= @user.email %></h3>
+<p>
+  Age: <%= @user.age %>
+</p>
+
+<table>
+  <tr>
+    <th>Resume file</th>
+  </tr>
+
+  <% @user.resumes.each do |resume| %>
+    <tr>
+      <td><%= resume.name %></td>
+    </tr>
+  <% end %>
+</table>
