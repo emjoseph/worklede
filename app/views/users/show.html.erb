@@ -1,8 +1,7 @@
-<h1><%= @user.first_name @user.last_name%> </h1>
+<h1><%= @user.first_name %> <%= @user.last_name %> </h1>
 <h3>Email: <%= @user.email %></h3>
-<p>
-  Age: <%= @user.age %>
-</p>
+<a href="/users/<%=@user.id%>/logout">Log Out</a>
+
 
 <table>
   <tr>

@@ -5,8 +5,8 @@ class LoginController < ApplicationController
       oauth = OauthService.new(request.env['omniauth.auth'])
       if user = oauth.create_oauth_account!
           puts "Succesfully Logged In"
-          puts oauth
-          redirect_to user, notice: "Succesfully logged on."
+          session[:user_id] = user[:id]
+          redirect_to "/", notice: "Succesfully logged on."
       end
     rescue => e
       puts "Login error"
