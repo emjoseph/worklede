@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'resumes#index'
+  root 'users#index'
 
   get '/auth/:provider/callback', to: 'login#callback', as: 'oauth_callback'
   get '/auth/failure', to: 'login#failure', as: 'oauth_failure'
@@ -14,6 +14,6 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  resources :resumes
+  resources :users
 
 end
