@@ -3,7 +3,7 @@ class LoginController < ApplicationController
   def callback
     begin
       oauth = OauthService.new(request.env['omniauth.auth'])
-      if returning_user = oauth.create_oauth_account!
+      if user = oauth.create_oauth_account!
           puts "Succesfully Logged In"
           puts oauth
           redirect_to user, notice: "Succesfully logged on."
