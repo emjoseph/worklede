@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'resumes#index'
 
+  get '/auth/:provider/callback', to: 'login#callback', as: 'oauth_callback'
+  get '/auth/failure', to: 'login#failure', as: 'oauth_failure'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -12,4 +15,5 @@ Rails.application.routes.draw do
   #   resources :products
 
   resources :resumes
+
 end
