@@ -31,16 +31,12 @@ class UsersController < ApplicationController
     @user = User.find(id=session[:user_id])
     @resume = @user.resumes.create()
     @resume.name = params[:resume_name]
-    
-    puts "Resume 1"
-    puts @resume.to_yaml
+
     resume_file = params[:user][:resume_file]
 
     # 1. Upload file to /public/uploads
     fileUploadPath = Rails.root.join('public', 'uploads', resume_file.original_filename)
-    puts "File upload path"
-    puts(fileUploadPath)
-    puts(resume_file)
+
     File.open(fileUploadPath, 'wb') do |file|
       file.write(resume_file.read)
 
@@ -67,18 +63,6 @@ class UsersController < ApplicationController
       redirect_to "/"
 
     end
-
-    #@resume.resußme_file.attach(params[:user][:resume_file])
-    #@resume.save
-    #puts @resume.resume_file.blob.key
-    #puts "https://worklede.s3.amazonaws.com/#{@resume.resume_file.blob.key}"
-    #puts "SAVE"
-    #puts @resume.resume_file.attached?
-    #puts @resume.to_yaml
-
-
-    #obj = AMAZON_S3_CLIENT('worklede').object('key')
-
   end
 
 
