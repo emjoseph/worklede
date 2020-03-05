@@ -1,0 +1,62 @@
+body {
+  margin: 0px !important;
+}
+
+a {
+  text-decoration:  none;
+  font-family: 'gilroyLight';
+}
+
+#worklede_header {
+  height: 64px;
+
+}
+
+#worklede_header_logo {
+  display: inline-block;
+  height: calc(100% - 4px);
+  width: 185px;
+  margin-left: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("https://worklede-assets.s3.amazonaws.com/workLedeLogo.png");
+}
+
+#worklede_header_log_in {
+  line-height:64px;
+  display: inline-block;
+  float:right;
+  margin-right:12px;
+  color: #355ECC;
+}
+
+#worklede_header_sign_up {
+  display: inline-block;
+  float:right;
+  margin-right:20px;
+  color: white;
+  background-color: #355ECC;
+  padding-left:10px;
+  padding-right:10px;
+  height:40px;
+  line-height: 42px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+#worklede_header_log_out {
+  line-height:64px;
+  display: inline-block;
+  float:right;
+  margin-right:12px;
+  color: #355ECC;
+}
+
+
+@font-face {
+  font-family: 'gilroyLight';
+  src: url('Gilroy-Medium.ttf');
+}
