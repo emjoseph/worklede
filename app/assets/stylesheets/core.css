@@ -4,7 +4,11 @@ body {
 
 a {
   text-decoration:  none;
-  font-family: 'gilroyLight';
+  font-family: 'gilroyMedium';
+}
+
+div {
+  font-family: 'gilroyRegular';
 }
 
 #worklede_header {
@@ -55,8 +59,21 @@ a {
   color: #355ECC;
 }
 
+#worklede_header_welcome {
+  line-height:64px;
+  display: inline-block;
+  float:right;
+  margin-right:12px;
+  color: #919191;
+}
+
 
 @font-face {
-  font-family: 'gilroyLight';
+  font-family: 'gilroyMedium';
   src: url('Gilroy-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'gilroyRegular';
+  src: url('Gilroy-Regular.ttf');
 }
