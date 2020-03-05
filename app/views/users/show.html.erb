@@ -5,13 +5,14 @@
 
 
 <div> Upload Resume </div>
-<%= form_for @user do |f| %>
+
+<%= form_with(url: "/users/#{@user.id}/resumes/", multipart: true) do %>
     <%= label_tag(:resume_name, "Resume Name:") %>
     <%= text_field_tag(:resume_name) %>
-    <%= f.file_field :resume_file, id:"upload_file_btn"%>
+    <%= file_field_tag :resume_file, id:"upload_file_btn"%>
 
     <div class="actions">
-     <%= f.submit "Submit", id:"submit_btn" %>
+     <%= submit_tag "Submit", id:"submit_btn" %>
     </div>
 <% end %>
 
