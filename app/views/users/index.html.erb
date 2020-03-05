@@ -1,12 +1,7 @@
-<html>
-  <body>
-    <% flash.each do |type, msg| %>
-      <div>
-        <%= msg %>
-      </div>
-    <% end %>
-    Welcome to WorkLede!
-    <a id="log_in" href="/auth/linkedin">Log In</a>
-    <a id="sign_up" href="/auth/linkedin">Sign Up</a>
-  </body>
-</html>
+<%= render "layouts/header.html.erb" %>
+
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>

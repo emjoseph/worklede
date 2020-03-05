@@ -1,0 +1,12 @@
+<div id="worklede_header">
+
+  <div id="worklede_header_logo"></div>
+
+  <% if @user %>
+    <a id="worklede_header_log_out" href="/users/<%=@user.id%>/logout">Log Out</a>
+  <% else %>
+    <a id="worklede_header_sign_up" href="/auth/linkedin">Sign Up</a>
+    <a id="worklede_header_log_in" href="/auth/linkedin">Log In</a>
+  <% end %>
+
+</div>
