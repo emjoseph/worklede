@@ -13,7 +13,8 @@
 ActiveRecord::Schema.define(version: 2020_03_04_195209) do
 
   create_table "resumes", force: :cascade do |t|
-    t.string "resume_link"
+    t.string "s3_link"
+    t.string "name"
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
