@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
   def create
-    @user = User.new(params.require(:user).permit(:name, :email, :age, reumes: []))
+    @user = User.new(params.require(:user).permit(:name, :email, :age, resumes: []))
     if @user.resumes.attached?
       @user.resumes.attach(params[:resumes])
     end
