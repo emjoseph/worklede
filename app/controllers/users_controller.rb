@@ -65,7 +65,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   private
     def resume_params
       puts "RESUME PARAMS METHOD"

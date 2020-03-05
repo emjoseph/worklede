@@ -15,8 +15,19 @@
     </div>
 <% end %>
 
+<table>
+  <tr>
+    <th>Active Resumes</th>
+    <th></th>
+  </tr>
 
-<div> Active Resumes </div>
-<% @user.resumes.each do |resume| %>
-  <a href="<%= resume.s3_link%>" target="_blank"> <%= resume.name %> </a><br>
-<% end %>
+  <% @user.resumes.each do |resume| %>
+    <tr>
+      <td><a href="<%= resume.s3_link%>" target="_blank"> <%= resume.name %> </a></td>
+      <td><%= link_to 'Delete resume', [resume.user, resume],
+              method: :delete,
+              data: { confirm: 'Are you sure?' },
+              id: resume.id %></td>
+    </tr>
+  <% end %>
+</table>
