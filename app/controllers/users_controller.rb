@@ -61,7 +61,6 @@ class UsersController < ApplicationController
       puts("Upload done!")
 
       redirect_to "/"
-
     end
   end
 
