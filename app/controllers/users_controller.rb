@@ -3,8 +3,6 @@ require 'securerandom'
 class UsersController < ApplicationController
 
   def index
-    puts "INDEX CALLED"
-
     # If not logged in redirect to homepage
     @logged_in_user_id = session[:user_id]
     if @logged_in_user_id
@@ -20,7 +18,6 @@ class UsersController < ApplicationController
   end
 
   def logout
-    puts "LOG OUT CALLED"
     session.clear
     redirect_to "/"
   end
@@ -31,10 +28,10 @@ class UsersController < ApplicationController
   end
 
   def update()
-
     @user = User.find(id=session[:user_id])
     @resume = @user.resumes.create()
-
+    puts "Resume 1"
+    puts @resume.to_yaml
     resume_file = params[:user][:resume_file]
 
     # 1. Upload file to /public/uploads
@@ -58,7 +55,7 @@ class UsersController < ApplicationController
       s3Object.upload_file(fileUploadPath, acl:'public-read')
 
       # 3. Save resume s3 link on DB
-      @resume.resume_link = s3Object.public_url
+      @resume.s3_link = s3Object.public_url
       @resume.save
 
       # 4. Delete file from public/uploads
@@ -87,7 +84,7 @@ class UsersController < ApplicationController
     def resume_params
       puts "RESUME PARAMS METHOD"
       puts params
-      params.require(:user).permit(:resume_file)
+      params.require(:user).permit(:resume_file, :resume_name)
     end
 
 end
