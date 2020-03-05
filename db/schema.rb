@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_195209) do
+ActiveRecord::Schema.define(version: 2020_03_04_224436) do
 
   create_table "resumes", force: :cascade do |t|
     t.string "s3_link"
@@ -31,7 +31,10 @@ ActiveRecord::Schema.define(version: 2020_03_04_195209) do
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "resumes_id"
+    t.index ["resumes_id"], name: "index_users_on_resumes_id"
   end
 
   add_foreign_key "resumes", "users"
+  add_foreign_key "users", "resumes", column: "resumes_id"
 end

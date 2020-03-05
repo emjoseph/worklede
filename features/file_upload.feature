@@ -7,5 +7,5 @@ Feature: User can upload his resume
 Scenario: User is able to upload his resume
     
     Given that I am on my profile page
-    When I click on the Upload button
+    When I click on the Upload button and upload a file
     Then I can see the filename next to the Upload button
