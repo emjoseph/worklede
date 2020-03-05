@@ -18,7 +18,7 @@ end
 
 When("I upload a resume with a name entered and a file chosen") do
 
-  attach_file('user[resume_file]', "#{Rails.root}/features/files/resume.pdf")
+  attach_file('resume_file', "#{Rails.root}/features/files/resume.pdf")
   fill_in 'resume_name', with: 'Bhaskar Resume'
   click_button('submit_btn')
 
