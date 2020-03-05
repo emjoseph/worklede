@@ -30,6 +30,8 @@ class UsersController < ApplicationController
   def update()
     @user = User.find(id=session[:user_id])
     @resume = @user.resumes.create()
+    @resume.name = params[:resume_name]
+    
     puts "Resume 1"
     puts @resume.to_yaml
     resume_file = params[:user][:resume_file]
