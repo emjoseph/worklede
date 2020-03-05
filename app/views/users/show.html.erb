@@ -1,23 +1,24 @@
-<h1><%= @user.first_name %> <%= @user.last_name %> </h1>
-<h3>Email: <%= @user.email %></h3>
 <a href="/users/<%=@user.id%>/logout">Log Out</a>
 
+<h1><%= @user.first_name %> <%= @user.last_name %> </h1>
+<h3>Email: <%= @user.email %></h3>
 
+
+<div> Upload Resume </div>
 <%= form_for @user do |f| %>
-   <%= f.file_field :resume_file %>
-   <div class="actions">
+    <%= label_tag(:resume_name, "Resume Name:") %>
+    <%= text_field_tag(:resume_name) %>
+    <%= f.file_field :resume_file %>
+
+    <div class="actions">
      <%= f.submit "Upload" %>
-   </div>
+    </div>
 <% end %>
 
-<table>
-  <tr>
-    <th>Resume file</th>
-  </tr>
 
-  <% @user.resumes.each do |resume| %>
-    <tr>
-      <td>You have a resume :)</td>
-    </tr>
-  <% end %>
-</table>
+<div> Active Resumes </div>
+<% @user.resumes.each do |resume| %>
+
+  <a href="<%= resume.s3_link%>" target="_blank"> <%= resume.name %> </a><br>
+
+<% end %>
