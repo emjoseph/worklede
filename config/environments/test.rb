@@ -4,6 +4,8 @@
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
+  config.middleware.use RackSessionAccess::Middleware
+  
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.cache_classes = false
@@ -31,7 +33,7 @@ Rails.application.configure do
   config.action_controller.allow_forgery_protection = false
 
   # Store uploaded files on the local file system in a temporary directory.
-  config.active_storage.service = :amazon
+  config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
 

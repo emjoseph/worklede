@@ -8,7 +8,7 @@
 <%= form_for @user do |f| %>
     <%= label_tag(:resume_name, "Resume Name:") %>
     <%= text_field_tag(:resume_name) %>
-    <%= f.file_field :resume_file %>
+    <%= f.file_field :resume_file, id:"upload_file_btn"%>
 
     <div class="actions">
      <%= f.submit "Upload" %>
@@ -18,7 +18,5 @@
 
 <div> Active Resumes </div>
 <% @user.resumes.each do |resume| %>
-
   <a href="<%= resume.s3_link%>" target="_blank"> <%= resume.name %> </a><br>
-
 <% end %>

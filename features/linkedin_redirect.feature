@@ -6,6 +6,6 @@ Feature: User is redirected to LinkedIn on clicking sign up
 
 Scenario: User is redirected to LinkedIn sign in page
 
-    Given I am on the home page
-    When I click on Sign up button
+    Given that I am on the home page
+    When I click on the Log In link
     Then I am redirected to LinkedIn
