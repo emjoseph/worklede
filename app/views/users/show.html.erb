@@ -3,6 +3,13 @@
 <a href="/users/<%=@user.id%>/logout">Log Out</a>
 
 
+<%= form_for @user do |f| %>
+   <%= f.file_field :resume_file %>
+   <div class="actions">
+     <%= f.submit "Upload" %>
+   </div>
+<% end %>
+
 <table>
   <tr>
     <th>Resume file</th>
@@ -10,7 +17,7 @@
 
   <% @user.resumes.each do |resume| %>
     <tr>
-      <td><%= resume.name %></td>
+      <td>You have a resume :)</td>
     </tr>
   <% end %>
 </table>
