@@ -12,10 +12,13 @@
 
 ActiveRecord::Schema.define(version: 2020_03_04_224436) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "resumes", force: :cascade do |t|
     t.string "s3_link"
     t.string "name"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_resumes_on_user_id"
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_03_04_224436) do
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "resumes_id"
+    t.bigint "resumes_id"
     t.index ["resumes_id"], name: "index_users_on_resumes_id"
   end
 

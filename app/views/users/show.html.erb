@@ -13,15 +13,15 @@
       You will receive tailored job listings to your email as soon as they're posted based on the content of this/these resume(s). Limited to companies in New York City for now.
     </div>
     <table>
+      <col width="130">
+      <col width="150">
+      <col width="80">
+      <tr>
+        <th>Name</th>
+        <th>Preview</th>
+        <th></th>
+      </tr>
       <% @user.resumes.each do |resume| %>
-        <col width="130">
-        <col width="150">
-        <col width="80">
-        <tr>
-          <th>Name</th>
-          <th>Preview</th>
-          <th></th>
-        </tr>
         <tr>
           <td><a href="<%= resume.s3_link%>" target="_blank"> <%= resume.name %> </a></td>
           <td>
