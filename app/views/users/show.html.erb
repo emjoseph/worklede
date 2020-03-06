@@ -13,7 +13,7 @@
       You will receive tailored job listings to your email as soon as they're posted based on the content of this/these resume(s). Limited to companies in New York City for now.
     </div>
     <table>
-      <col width="130">
+      <col width="240">
       <col width="150">
       <col width="80">
       <tr>
@@ -31,7 +31,7 @@
           </td>
           <td><%= link_to [resume.user, resume],
                   method: :delete,
-                  data: { confirm: 'Are you sure?' },
+                  data: { confirm: 'Are you sure want to delete this resume? You will no longer receive job alerts for it.' },
                   id: resume.id  do %>
                   <div class="delete_icon"></div>
               <% end %>
@@ -42,16 +42,23 @@
   <% end %>
 
 
-<div style="color: #4d4d4d; font-size: 17px; font-family: 'gilroyBold'; margin-top: 20px"> Upload Resume </div>
-<%= form_with(url: "/users/#{@user.id}/resumes/", multipart: true) do %>
-    <%= label_tag(:resume_name, "Resume Name:", class: 'resume_form_label') %>
-    <%= text_field_tag :resume_name, "", class: 'resume_text_field', placeholder: 'Enter Resume Name', id: 'resume_name_field' %>
-    <br>
-    <%= label_tag(:resume_file, "Resume File (PDF):", class: 'resume_form_label') %>
-    <%= file_field_tag :resume_file, id:"upload_file_btn", accept: '.pdf'%>
+  <div style="color: #4d4d4d; font-size: 17px; font-family: 'gilroyBold'; margin-top: 20px"> Upload Resume </div>
+  <%= form_with(url: "/users/#{@user.id}/resumes/", multipart: true) do %>
+      <%= label_tag(:resume_name, "Resume Name:", class: 'resume_form_label') %>
+      <%= text_field_tag :resume_name, "", class: 'resume_text_field', placeholder: 'Enter Resume Name', id: 'resume_name_field' %>
+      <br>
+      <%= label_tag(:resume_file, "Resume File (PDF):", class: 'resume_form_label') %>
+      <%= file_field_tag :resume_file, id:"upload_file_btn", accept: '.pdf'%>
 
-    <div class="actions">
-     <%= submit_tag "Upload", id:"submit_btn" %>
-    </div>
-<% end %>
+      <div class="actions">
+       <%= submit_tag "Upload", id:"submit_btn" %>
+      </div>
+  <% end %>
+
+
+<div id="alerts_section" style="font-family: 'Avenir'; margin-bottom:16px;">
+  <div style="margin-top: 30px; color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Job Alerts</div>
+  Coming soon.This section will allow you to browse all the job alerts we send to your email.
+</div>
+
 </div>
