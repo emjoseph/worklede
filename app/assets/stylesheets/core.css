@@ -75,17 +75,17 @@ div {
 
 @font-face {
   font-family: 'gilroyBold';
-  src: url('Gilroy-Bold.ttf');
+  src: url('fonts/Gilroy-Bold.ttf');
 }
 
 @font-face {
   font-family: 'gilroyMedium';
-  src: url('Gilroy-Medium.ttf');
+  src: url('fonts/Gilroy-Medium.ttf');
 }
 
 @font-face {
   font-family: 'gilroyRegular';
-  src: url('Gilroy-Regular.ttf');
+  src: url('fonts/Gilroy-Regular.ttf');
 }
 
 form {
