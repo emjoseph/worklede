@@ -1,34 +1,57 @@
 <%= render "layouts/header.html.erb" %>
 
-<h1><%= @user.first_name %> <%= @user.last_name %> </h1>
-<h3>Email: <%= @user.email %></h3>
+<div id="content">
+
+  <% if @user.resumes.count == 0 %>
+    <div id="no_resumes_section" style="font-family: 'Avenir'">
+      <div style="color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">You have no active resumes.</div>
+      Upload one below to receive tailored job listings based on your resume to your email as soon as they're posted.
+    </div>
+  <% else %>
+    <div id="resumes_section" style="font-family: 'Avenir'; margin-bottom:16px;">
+      <div style="color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Active Resumes</div>
+      You will receive tailored job listings to your email as soon as they're posted based on the content of this/these resume(s). Limited to companies in New York City for now.
+    </div>
+    <table>
+      <% @user.resumes.each do |resume| %>
+        <col width="130">
+        <col width="150">
+        <col width="80">
+        <tr>
+          <th>Name</th>
+          <th>Preview</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td><a href="<%= resume.s3_link%>" target="_blank"> <%= resume.name %> </a></td>
+          <td>
+            <object data="<%= resume.s3_link %>" type="application/pdf">
+              <embed src="<%= resume.s3_link %>" width="100%" height="100%" />
+            </object>
+          </td>
+          <td><%= link_to [resume.user, resume],
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' },
+                  id: resume.id  do %>
+                  <div class="delete_icon"></div>
+              <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 
 
-<div> Upload Resume </div>
-
+<div style="color: #4d4d4d; font-size: 17px; font-family: 'gilroyBold'; margin-top: 20px"> Upload Resume </div>
 <%= form_with(url: "/users/#{@user.id}/resumes/", multipart: true) do %>
-    <%= label_tag(:resume_name, "Resume Name:") %>
-    <%= text_field_tag(:resume_name) %>
-    <%= file_field_tag :resume_file, id:"upload_file_btn"%>
+    <%= label_tag(:resume_name, "Resume Name:", class: 'resume_form_label') %>
+    <%= text_field_tag :resume_name, "", class: 'resume_text_field', placeholder: 'Enter Resume Name', id: 'resume_name_field' %>
+    <br>
+    <%= label_tag(:resume_file, "Resume File (PDF):", class: 'resume_form_label') %>
+    <%= file_field_tag :resume_file, id:"upload_file_btn", accept: '.pdf'%>
 
     <div class="actions">
-     <%= submit_tag "Submit", id:"submit_btn" %>
+     <%= submit_tag "Upload", id:"submit_btn" %>
     </div>
 <% end %>
-
-<table>
-  <tr>
-    <th>Active Resumes</th>
-    <th></th>
-  </tr>
-
-  <% @user.resumes.each do |resume| %>
-    <tr>
-      <td><a href="<%= resume.s3_link%>" target="_blank"> <%= resume.name %> </a></td>
-      <td><%= link_to 'Delete resume', [resume.user, resume],
-              method: :delete,
-              data: { confirm: 'Are you sure?' },
-              id: resume.id %></td>
-    </tr>
-  <% end %>
-</table>
+</div>
