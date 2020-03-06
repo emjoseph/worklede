@@ -75,19 +75,18 @@ div {
 
 @font-face {
   font-family: 'gilroyBold';
-  src: url('fonts/Gilroy-Bold.ttf');
+  src: asset-url('/fonts/Gilroy-Bold.ttf');
 }
 
 @font-face {
   font-family: 'gilroyMedium';
-  src: url('fonts/Gilroy-Medium.ttf');
+  src: asset-url('/fonts/Gilroy-Medium.ttf');
 }
 
 @font-face {
   font-family: 'gilroyRegular';
-  src: url('fonts/Gilroy-Regular.ttf');
+  src: asset-url('/fonts/Gilroy-Regular.ttf');
 }
-
 form {
   font-family: 'Avenir';
   font-size: 16px;
