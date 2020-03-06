@@ -18,7 +18,6 @@ class ResumesController < ApplicationController
       puts(params.to_yaml)
       puts(resume_file)
       fileUploadPath = Rails.root.join('public', 'uploads', resume_file.original_filename)
-      puts("D")
 
       File.open(fileUploadPath, 'wb') do |file|
         file.write(resume_file.read)
@@ -37,14 +36,22 @@ class ResumesController < ApplicationController
 
         # 3. Save resume s3 link on DB
         @resume.s3_link = s3Object.public_url
-        @resume.save
-
-        # 4. Delete file from public/uploads
+        # 4. Send an email to user if resume is uploaded successfully
+        if @resume.save
+            # Tell the UserMailer to send a welcome email after save
+            UserMailer.with(user: @user).new_resume_email.deliver
+            
+            format.html { redirect_to(@user, notice: 'New resume successfully uploaded') }
+        end
+        
+        # 5. Delete file from public/uploads
         File.delete(fileUploadPath) if File.exist?(fileUploadPath)
         puts("Upload done!")
 
         redirect_to "/"
-      end
+        
+       
+        end
     end
 
     private
