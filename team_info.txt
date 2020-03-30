@@ -1,5 +1,3 @@
-# README
-
 Software Engineering - Iteration 1
 Bhaskar Ghosh (bg2625)
 Eugene M. Joseph (emj2152)

@@ -36,23 +36,25 @@ class ResumesController < ApplicationController
 
         # 3. Save resume s3 link on DB
         @resume.s3_link = s3Object.public_url
-        # 4. Send an email to user if resume is uploaded successfully
-        @resume.save
-        #if @resume.save
-        #    # Tell the UserMailer to send a welcome email after save
-        #    UserMailer.with(user: @user).new_resume_email.deliver
-        #
-        #    format.html { redirect_to(@user, notice: 'New resume successfully uploaded') }
-        #end
 
-        # 5. Delete file from public/uploads
+        # 4. Delete file from public/uploads
         File.delete(fileUploadPath) if File.exist?(fileUploadPath)
-        puts("Upload done!")
 
-        redirect_to "/"
-
-
+        # 5. Send an email to user if resume is uploaded successfully
+        @resume.save
+        if @resume.save
+            # Tell the UserMailer to send a welcome email after save
+            puts "SENDING EMAIL"
+            puts @user.email
+            UserMailer.with(user: @user).new_resume_email.deliver
+            puts "SENT EMAIL"
+            redirect_to "/"
+        else
+          redirect_to "/"
         end
+
+
+      end
     end
 
     private
