@@ -11,6 +11,7 @@ from spacy.matcher import Matcher
 import re
 from spacy.gold import GoldParse 
 from spacy.pipeline import EntityRecognizer 
+import json
 
 # Constants
 CONST_EXPERIENCE = 'experience'
@@ -18,6 +19,31 @@ CONST_EDUCATION = 'education'
 CONST_SKILLS = 'skills'
 CONST_EDUQLF = 'educational qualifications'
 CONST_QLF = 'qualifications'
+
+# Job titles to look for
+CONST_REPORTER = 'reporter'
+CONST_JOURNALIST = 'journalist'
+CONST_AUDIO = 'podcast'
+CONST_VIDEO = 'broadcast'
+CONST_PRODUCER = 'producer'
+CONST_CONTENT_WRITER = 'content writer'
+
+# POS and ENTs
+CONST_ORG = 'ORG'
+CONST_ORGS = 'organizations'
+CONST_GPE = 'GPE'
+CONST_LOCATIONS = 'locations'
+CONST_NOUNS = 'nouns'
+CONST_NOUN = 'NOUN'
+CONST_NOUN_CHUNKS = 'noun_chunks'
+CONST_VERBS = 'verbs'
+CONST_VERB = 'VERB'
+CONST_DATE = 'DATE'
+CONST_DATES = 'dates'
+CONST_TEXT = 'text'
+CONST_EMAILS = 'emails'
+CONST_PHONES = 'phones'
+
 
 class Resume:
     name = ''
@@ -146,28 +172,56 @@ def get_insights_from_resume(resume_text):
     resume.education = education_bucket
     resume.skills = skills_bucket
     
+    print(experience_bucket)
 
-    # extract_entities(experience_bucket)
-    extract_entities(skills_bucket)
+    extract_entities(resume_text)
+   # extract_entities(skills_bucket)
 
     return resume
 
-def extract_entities(str):
+def extract_entities(doc_str):
     '''
-    Extracts entitities from text
+    Extracts entitities from text. spaCy's NER will not recognize job titles without training the pre-trained model.
     '''
-    doc = get_doc(str)
-    # print noun chunks
-    print([chunk.text for chunk in doc.noun_chunks])
+    orgs = []
+    geographical_locations = []
+    nouns = []
+    verbs = []
+    dates = []
+    emails = re.findall(r'[A-Za-z0-9_]+\@\S+\.[A-Za-z]+', resume_text)
+    # getting phone numbers
+    phones = re.findall(r'\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}', resume_text)
+    doc = get_doc(doc_str)
+    noun_chunks = [chunk.text for chunk in doc.noun_chunks]
     # print entities
+    for token in doc:
+        if token.pos_ == CONST_NOUN:
+            nouns.append(token.text)
+        elif token.pos_ == CONST_VERB:
+            verbs.append(token.text)
     for ent in doc.ents:
-        print(ent.text, ent.label_)
-            
+        if ent.label_ == CONST_ORG:
+            orgs.append(ent.text)
+        elif ent.label_ == CONST_GPE:
+            geographical_locations.append(ent.text)
+        elif ent.label_ == CONST_DATE:
+            dates.append(ent.text)
 
+    # Create JSON
+    resume_json = {CONST_TEXT: doc_str,
+                  CONST_EMAILS: emails,
+                  CONST_PHONES: phones,
+                 CONST_ORGS: orgs,
+                 CONST_LOCATIONS: geographical_locations,
+                 CONST_DATES: dates,
+                  CONST_NOUNS: nouns,
+                  CONST_VERBS: verbs,
+                  CONST_NOUN_CHUNKS: noun_chunks}
+
+    resume_json_str = json.dumps(resume_json, ensure_ascii=False)
+    return resume_json_str
 
 resume_text = convert_pdf_to_txt('Resume_Bhaskar.pdf')
-get_insights_from_resume(resume_text)
-
-
-
-
+# get_insights_from_resume(resume_text)
+json_str = extract_entities(resume_text)
+print(json_str)
