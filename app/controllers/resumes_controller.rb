@@ -36,6 +36,20 @@ class ResumesController < ApplicationController
 
         # 3. Save resume s3 link on DB
         @resume.s3_link = s3Object.public_url
+        
+        # Call Python script to get json string
+        json_str = `python3 resume_parser/resume_parser.py "#{@resume.s3_link}"`
+        puts json_str
+        txtFileName = "#{@resume.s3_link}.txt"
+        txtFileUploadPath = Rails.root.join('public', 'text-uploads', txtFileName)
+        File.write(txtFileUploadPath, json_str)
+
+        s3TxtFileName = SecureRandom.uuid + "-resumeInsights.txt"
+        s3Object = s3.bucket('worklede').object(s3TxtFileName)
+        s3Object.upload_file(fileUploadPath, acl:'public-read')
+
+        # Delete text file if it exists in public/text-uploads
+        File.delete(txtFileUploadPath) if File.exist?(txtFileUploadPath)
 
         # 4. Delete file from public/uploads
         File.delete(fileUploadPath) if File.exist?(fileUploadPath)

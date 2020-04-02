@@ -10,17 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_224436) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 2020_04_02_051222) do
 
   create_table "resumes", force: :cascade do |t|
     t.string "s3_link"
     t.string "name"
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "s3_txt_link"
     t.index ["user_id"], name: "index_resumes_on_user_id"
   end
 
@@ -34,7 +32,7 @@ ActiveRecord::Schema.define(version: 2020_03_04_224436) do
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "resumes_id"
+    t.integer "resumes_id"
     t.index ["resumes_id"], name: "index_users_on_resumes_id"
   end
 

@@ -5,13 +5,15 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from io import StringIO
-from pyresparser import ResumeParser
 import spacy
 from spacy.matcher import Matcher
 import re
-from spacy.gold import GoldParse 
-from spacy.pipeline import EntityRecognizer 
+from spacy.gold import GoldParse
+from spacy.pipeline import EntityRecognizer
 import json
+import sys
+import requests
+import os
 
 # Constants
 CONST_EXPERIENCE = 'experience'
@@ -61,14 +63,19 @@ class NLP:
     def __init__(self):
         self.nlp_spacy = spacy.load("en_core_web_sm")
 
-def convert_pdf_to_txt(path):
+def convert_pdf_to_txt(file_url):
+
+    web_file = requests.get(file_url, stream = True)
+    with open("file_name.pdf", "wb") as resume_pdf:
+        resume_pdf.write(web_file.content)
+
     rsrcmgr = PDFResourceManager()
     retstr = StringIO()
     #codec = 'utf-8'
     laparams = LAParams()
     device = TextConverter(rsrcmgr, retstr, laparams=laparams)
-
-    fp = open(path, 'rb')
+    #
+    fp = open("file_name.pdf", 'rb')
 
     parser = PDFParser(fp)
     doc = PDFDocument(parser)
@@ -90,6 +97,8 @@ def convert_pdf_to_txt(path):
     fp.close()
     device.close()
     retstr.close()
+    # Remove PDF once reading is done
+    os.remove("file_name.pdf")
     #print(text)
     return text
 
@@ -103,7 +112,7 @@ def get_insights_from_resume(resume_text):
     Different sections of the resume can be Professional Experience (or Journalism Experience or just Experience or Additional Experience,
     Technical Skills or just Skills, Education, Related Coursework or Relevant Coursework or just Coursework, Honors and Achievements
     '''
-    
+
     resume = Resume()
     # getting email
     emails = re.findall(r'[A-Za-z0-9_]+\@\S+\.[A-Za-z]+', resume_text)
@@ -132,7 +141,7 @@ def get_insights_from_resume(resume_text):
         # finding out for each line if there are any pattern matches
         if re.search(CONST_EXPERIENCE, line, re.IGNORECASE):
             # start tracking experience from here
-            # get the token id 
+            # get the token id
             token_exp = [(token.text,token.i) for token in doc if token.text.lower() == CONST_EXPERIENCE][0]
         elif re.search(CONST_EDUCATION, line, re.IGNORECASE):
             token_edu = [(token.text,token.i) for token in doc if token.text.lower() == CONST_EDUCATION][0]
@@ -146,7 +155,7 @@ def get_insights_from_resume(resume_text):
     # sort the tokens
     tokens = [token_exp, token_edu, token_skills]
     print(token_exp, token_edu, token_skills)
-    tokens.sort(key = lambda x: x[1])  
+    tokens.sort(key = lambda x: x[1])
     # iterate over tokens
     for index, token_tup in enumerate(tokens):
         if token_tup[0].lower() == CONST_EXPERIENCE:
@@ -167,11 +176,11 @@ def get_insights_from_resume(resume_text):
             else:
                 skills_tups = [(token.text,token.i) for token in doc if token.i > token_tup[1]]
             skills_bucket = skills_bucket.join(([tup[0] for tup in skills_tups]))
-    
+
     resume.experience = experience_bucket
     resume.education = education_bucket
     resume.skills = skills_bucket
-    
+
     print(experience_bucket)
 
     extract_entities(resume_text)
@@ -221,7 +230,9 @@ def extract_entities(doc_str):
     resume_json_str = json.dumps(resume_json, ensure_ascii=False)
     return resume_json_str
 
-resume_text = convert_pdf_to_txt('Resume_Bhaskar.pdf')
+file_url = sys.argv[1]
+
+resume_text = convert_pdf_to_txt(file_url)
 # get_insights_from_resume(resume_text)
 json_str = extract_entities(resume_text)
 print(json_str)
