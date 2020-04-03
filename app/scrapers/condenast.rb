@@ -20,7 +20,6 @@ def scrape_jobs_for_section(url, section_name, company, platform, browser)
       puts item['title']['commandLink']
       itemUrls.append(item['title']['commandLink'])
   }
-  puts itemUrls
 
   browser.goto url
   sleep 2
@@ -95,8 +94,3 @@ jobs_section_urls.each { |section_array|
    scrape_jobs_for_section(url, section_name, company, platform, browser)
    puts "----------------------------"
 }
-
-
-jobs_section_urls = [
-  "https://condenast.wd5.myworkdayjobs.com/CondeCareers"
-]
