@@ -12,4 +12,12 @@
   <body>
     <%= yield %>
   </body>
+  <script>
+    var form = document.forms[0]
+    form.addEventListener("submit", function(){
+      console.log("FORM FORM FORM")
+    }, false);
+
+  </script>
+
 </html>

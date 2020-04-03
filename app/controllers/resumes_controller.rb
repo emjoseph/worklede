@@ -54,21 +54,21 @@ class ResumesController < ApplicationController
         json_str = `python3 nlp/resume_parser.py "#{fileUploadPath}"`
         puts json_str
         @resume.resume_txt = json_str
-        txtFileName = s3FileName
-        txtFileName.gsub! ".pdf", ".txt"
-        txtFileUploadPath = Rails.root.join('public', 'text-uploads', txtFileName)
-        File.write(txtFileUploadPath, json_str)
-
-        s3TxtFileName = SecureRandom.uuid + "-resumeInsights.txt"
-        s3TxtObject = s3.bucket('worklede').object(s3TxtFileName)
-        s3TxtObject.upload_file(txtFileUploadPath, acl:'public-read')
-
-        @resume.s3_txt_link = s3TxtObject.public_url
+        #txtFileName = s3FileName
+        #txtFileName.gsub! ".pdf", ".txt"
+        #txtFileUploadPath = Rails.root.join('public', 'text-uploads', txtFileName)
+        #File.write(txtFileUploadPath, json_str)
+        #s3TxtFileName = SecureRandom.uuid + "-resumeInsights.txt"
+        #s3TxtObject = s3.bucket('worklede').object(s3TxtFileName)
+        #s3TxtObject.upload_file(txtFileUploadPath, acl:'public-read')
+        #@resume.s3_txt_link = s3TxtObject.public_url
+        #ResumeMatchWorker.perform_async(@resume)
         @resume.save
+        @resume.get_job_matches_spacey
 
         # 6. Delete text file if it exists in public/text-uploads
         File.delete(fileUploadPath) if File.exist?(fileUploadPath)
-        File.delete(txtFileUploadPath) if File.exist?(txtFileUploadPath)
+        #File.delete(txtFileUploadPath) if File.exist?(txtFileUploadPath)
       end
     end
 

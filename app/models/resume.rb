@@ -9,18 +9,24 @@ class Resume < ApplicationRecord
       scores = []
       jobs = []
 
-      Job.last(5).each { |job|
-        score = `python3 nlp/match_score.py "#{job.desc}" "#{resume_text}"`
-        scores.append(score)
-        jobs.append(job)
+      Job.last(2).each { |job|
 
-        match = Match.new()
-        match.save
-        match.resume = self
-        match.job = job
-        match.job_id = job.id
-        match.score = score
-        match.save
+        if Match.where(:resume_id => self.id, :job_id => job.id).blank?
+            puts "Match does not exist..."
+            score = `python3 nlp/match_score.py "#{job.desc}" "#{resume_text}"`
+            scores.append(score)
+            jobs.append(job)
+
+            match = Match.new()
+            match.save
+            match.resume = self
+            match.job = job
+            match.job_id = job.id
+            match.score = score
+            match.save
+        else
+            puts "Match already exists..."
+        end
       }
 
       puts scores
