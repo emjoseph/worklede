@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_02_051222) do
+ActiveRecord::Schema.define(version: 2020_04_03_024804) do
 
   create_table "resumes", force: :cascade do |t|
     t.string "s3_link"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_04_02_051222) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "s3_txt_link"
+    t.text "resume_txt"
     t.index ["user_id"], name: "index_resumes_on_user_id"
   end
 

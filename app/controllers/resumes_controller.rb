@@ -15,8 +15,8 @@ class ResumesController < ApplicationController
       resume_file = params[:resume_file]
 
       # 1. Upload file to /public/uploads
-      puts(params.to_yaml)
-      puts(resume_file)
+      # puts(params.to_yaml)
+      # puts(resume_file)
       fileUploadPath = Rails.root.join('public', 'uploads', resume_file.original_filename)
 
       File.open(fileUploadPath, 'wb') do |file|
@@ -40,14 +40,17 @@ class ResumesController < ApplicationController
         # Call Python script to get json string
         json_str = `python3 resume_parser/resume_parser.py "#{fileUploadPath}"`
         puts json_str
+        @resume.resume_txt = json_str
         txtFileName = s3FileName
         txtFileName.gsub! ".pdf", ".txt"
         txtFileUploadPath = Rails.root.join('public', 'text-uploads', txtFileName)
         File.write(txtFileUploadPath, json_str)
 
         s3TxtFileName = SecureRandom.uuid + "-resumeInsights.txt"
-        s3Object = s3.bucket('worklede').object(s3TxtFileName)
-        s3Object.upload_file(fileUploadPath, acl:'public-read')
+        s3TxtObject = s3.bucket('worklede').object(s3TxtFileName)
+        s3TxtObject.upload_file(txtFileUploadPath, acl:'public-read')
+
+        @resume.s3_txt_link = s3TxtObject.public_url
 
         # Delete text file if it exists in public/text-uploads
         File.delete(txtFileUploadPath) if File.exist?(txtFileUploadPath)
