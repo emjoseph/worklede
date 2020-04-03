@@ -36,8 +36,21 @@ class ResumesController < ApplicationController
 
         # 3. Save resume s3 link on DB
         @resume.s3_link = s3Object.public_url
-        
-        # Call Python script to get json string
+
+        # 4. Send an email to user if resume is uploaded successfully
+        @resume.save
+        if @resume.save
+            # Tell the UserMailer to send a welcome email after save
+            puts "SENDING EMAIL"
+            puts @user.email
+            UserMailer.with(user: @user).new_resume_email.deliver
+            puts "SENT EMAIL"
+            redirect_to "/"
+        else
+          redirect_to "/"
+        end
+
+        # 5. Call Python script to get json string
         json_str = `python3 resume_parser/resume_parser.py "#{fileUploadPath}"`
         puts json_str
         @resume.resume_txt = json_str
@@ -51,27 +64,11 @@ class ResumesController < ApplicationController
         s3TxtObject.upload_file(txtFileUploadPath, acl:'public-read')
 
         @resume.s3_txt_link = s3TxtObject.public_url
-
-        # Delete text file if it exists in public/text-uploads
-        File.delete(txtFileUploadPath) if File.exist?(txtFileUploadPath)
-
-        # 4. Delete file from public/uploads
-        File.delete(fileUploadPath) if File.exist?(fileUploadPath)
-
-        # 5. Send an email to user if resume is uploaded successfully
         @resume.save
-        if @resume.save
-            # Tell the UserMailer to send a welcome email after save
-            puts "SENDING EMAIL"
-            puts @user.email
-            UserMailer.with(user: @user).new_resume_email.deliver
-            puts "SENT EMAIL"
-            redirect_to "/"
-        else
-          redirect_to "/"
-        end
 
-
+        # 6. Delete text file if it exists in public/text-uploads
+        File.delete(fileUploadPath) if File.exist?(fileUploadPath)
+        File.delete(txtFileUploadPath) if File.exist?(txtFileUploadPath)
       end
     end
 

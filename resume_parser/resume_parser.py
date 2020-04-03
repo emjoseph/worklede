@@ -102,6 +102,8 @@ def convert_pdf_to_txt(file_path):
     # Remove PDF once reading is done
     os.remove(file_path)
     #print(text)
+    text = text.replace('\n', ' ').replace('\r', '')
+    text = ' '.join(text.split())
     return text
 
 def get_doc(text):

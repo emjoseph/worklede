@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2020_04_02_192124) do
+ActiveRecord::Schema.define(version: 2020_04_03_052146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,10 +31,22 @@ ActiveRecord::Schema.define(version: 2020_04_02_192124) do
     t.index ["code", "company"], name: "index_jobs_on_code_and_company", unique: true
   end
 
+  create_table "matches", force: :cascade do |t|
+    t.bigint "resume_id", null: false
+    t.bigint "job_id", null: false
+    t.boolean "didEmail"
+    t.boolean "didEmail2"
+    t.string "company"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_matches_on_job_id"
+    t.index ["resume_id"], name: "index_matches_on_resume_id"
+  end
+
   create_table "resumes", force: :cascade do |t|
     t.string "s3_link"
     t.string "name"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "s3_txt_link"
@@ -53,10 +64,11 @@ ActiveRecord::Schema.define(version: 2020_04_02_192124) do
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "resumes_id"
+    t.bigint "resumes_id"
     t.index ["resumes_id"], name: "index_users_on_resumes_id"
   end
 
+  add_foreign_key "matches", "resumes"
   add_foreign_key "resumes", "users"
   add_foreign_key "users", "resumes", column: "resumes_id"
 end
