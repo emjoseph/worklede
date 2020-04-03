@@ -9,6 +9,7 @@ Eugene M. Joseph (emj2152)
 Run scraper scripts via cron jobs with the following command:  
 `rails runner app/scrapers/nyt.rb`
 
+
 ## Deploy
 `heroku run rake db:migrate`
 `git push heroku master`
