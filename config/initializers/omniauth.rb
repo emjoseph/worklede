@@ -7,5 +7,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   puts ENV['MAILGUN_USERNAME']
   puts ENV['MAILGUN_PASSWORD']
   puts ENV['AWS_SES_SMTP_USERNAME']
+  
 
 end
