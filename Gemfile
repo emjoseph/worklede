@@ -8,7 +8,10 @@ gem 'aws-sdk-s3', require: false
 gem 'aws-sdk'
 gem 'rspec'
 gem 'rack_session_access'
-
+gem 'kimurai'
+gem 'rubium'
+gem 'httparty'
+gem 'watir'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 # Use Puma as the app server
