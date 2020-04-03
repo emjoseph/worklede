@@ -1,10 +1,32 @@
-require 'pp'
-
 class Resume < ApplicationRecord
   belongs_to :user
   has_many :matches, :dependent => :destroy
 
-  def get_job_matches
+  def get_job_matches_spacey
+      puts self.resume_txt
+      resume_json = JSON.parse(self.resume_txt)
+      resume_text = resume_json['text']
+      scores = []
+      jobs = []
+
+      Job.last(5).each { |job|
+        score = `python3 nlp/match_score.py "#{job.desc}" "#{resume_text}"`
+        scores.append(score)
+        jobs.append(job)
+
+        match = Match.new()
+        match.save
+        match.resume = self
+        match.job = job
+        match.job_id = job.id
+        match.score = score
+        match.save
+      }
+
+      puts scores
+  end
+
+  def get_job_matches_naive
       puts "Getting job matches"
 
       resume_json = JSON.parse(self.resume_txt)

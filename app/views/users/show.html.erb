@@ -58,7 +58,30 @@
 
 <div id="alerts_section" style="font-family: 'Avenir'; margin-bottom:16px;">
   <div style="margin-top: 30px; color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Job Alerts</div>
-  Coming soon.This section will allow you to browse all the job alerts we send to your email.
+  <table id="latest">
+    <col width="350">
+    <col width="250">
+    <col width="250">
+    <col width="250">
+    <col width="100">
+    <tr>
+      <th>Position</th>
+      <th>Company</th>
+      <th>Category</th>
+      <th>Location</th>
+      <th>Score</th>
+    </tr>
+    <% @job_matches.each do |match| %>
+      <tr>
+        <td><a href="<%= match.job.url%>" target="_blank"> <%= match.job.title %> </a></td>
+        <td><%= match.job.company%></td>
+        <td><%= match.job.category%></td>
+        <td><%= match.job.location%></td>
+        <td><%= match.score.round(2)%></td>
+      </tr>
+    <% end %>
+  </table>
+
 </div>
 
 <div id="latest_section" style="font-family: 'Avenir'; margin-bottom:60px;">
@@ -68,13 +91,13 @@
     <col width="250">
     <col width="250">
     <col width="250">
-    <col width="140">
+    <col width="100">
     <tr>
       <th>Position</th>
       <th>Company</th>
       <th>Category</th>
       <th>Location</th>
-      <th>Days Posted</th>
+      <th>Days Ago</th>
     </tr>
     <% @latest_jobs.each do |job| %>
       <tr>

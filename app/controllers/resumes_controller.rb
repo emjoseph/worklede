@@ -51,7 +51,7 @@ class ResumesController < ApplicationController
         end
 
         # 5. Call Python script to get json string
-        json_str = `python3 resume_parser/resume_parser.py "#{fileUploadPath}"`
+        json_str = `python3 nlp/resume_parser.py "#{fileUploadPath}"`
         puts json_str
         @resume.resume_txt = json_str
         txtFileName = s3FileName
