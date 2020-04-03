@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_224436) do
+ActiveRecord::Schema.define(version: 2020_04_02_192124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "jobs", force: :cascade do |t|
+    t.string "url"
+    t.text "desc"
+    t.string "location"
+    t.string "title"
+    t.string "code"
+    t.string "company"
+    t.string "platform"
+    t.string "category"
+    t.string "posted_days_ago_string"
+    t.integer "posted_days_ago_int"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code", "company"], name: "index_jobs_on_code_and_company", unique: true
+  end
 
   create_table "resumes", force: :cascade do |t|
     t.string "s3_link"
