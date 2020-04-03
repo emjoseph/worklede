@@ -1,3 +1,4 @@
+exit
 require 'watir'
 
 browser = Watir::Browser.new :chrome, headless: true

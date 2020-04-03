@@ -1,3 +1,4 @@
+exit
 require 'watir'
 require 'json'
 
