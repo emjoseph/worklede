@@ -38,9 +38,10 @@ class ResumesController < ApplicationController
         @resume.s3_link = s3Object.public_url
         
         # Call Python script to get json string
-        json_str = `python3 resume_parser/resume_parser.py "#{@resume.s3_link}"`
+        json_str = `python3 resume_parser/resume_parser.py "#{fileUploadPath}"`
         puts json_str
-        txtFileName = "#{@resume.s3_link}.txt"
+        txtFileName = s3FileName
+        txtFileName.gsub! ".pdf", ".txt"
         txtFileUploadPath = Rails.root.join('public', 'text-uploads', txtFileName)
         File.write(txtFileUploadPath, json_str)
 

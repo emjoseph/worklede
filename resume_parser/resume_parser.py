@@ -63,11 +63,13 @@ class NLP:
     def __init__(self):
         self.nlp_spacy = spacy.load("en_core_web_sm")
 
-def convert_pdf_to_txt(file_url):
-
-    web_file = requests.get(file_url, stream = True)
-    with open("file_name.pdf", "wb") as resume_pdf:
-        resume_pdf.write(web_file.content)
+def convert_pdf_to_txt(file_path):
+    '''
+    Takes PDF file path as input and extracts text from the PDF file
+    '''
+    # web_file = requests.get(file_url, stream = True)
+    # with open("file_name.pdf", "wb") as resume_pdf:
+    #     resume_pdf.write(web_file.content)
 
     rsrcmgr = PDFResourceManager()
     retstr = StringIO()
@@ -75,7 +77,7 @@ def convert_pdf_to_txt(file_url):
     laparams = LAParams()
     device = TextConverter(rsrcmgr, retstr, laparams=laparams)
     #
-    fp = open("file_name.pdf", 'rb')
+    fp = open(file_path, 'rb')
 
     parser = PDFParser(fp)
     doc = PDFDocument(parser)
@@ -98,7 +100,7 @@ def convert_pdf_to_txt(file_url):
     device.close()
     retstr.close()
     # Remove PDF once reading is done
-    os.remove("file_name.pdf")
+    os.remove(file_path)
     #print(text)
     return text
 
