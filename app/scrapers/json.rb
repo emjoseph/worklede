@@ -1,21 +1,18 @@
+require 'watir'
 
-require 'json'
+browser = Watir::Browser.new :chrome, headless: true
+url = "https://nytimes.wd5.myworkdayjobs.com/en-US/News/job/New-York-NY/Manager--International-SEO_REQ-004492"
 
-headers = {
-  "Accept"  => "application/json,application/xml"
+browser.goto url
+sleep 2
+
+page = Nokogiri::HTML.parse(browser.html)
+html_text = page.css('#richTextArea\.jobPosting\.jobDescription-input--uid6-input .GWTCKEditor-Disabled').text
+html_text.slice!("Job Description")
+html_text = html_text.gsub("*",".")
+desc = ""
+html_text.split(".").each{ |sentence|
+  desc += sentence.strip + ". "
 }
 
-jsonResponse = HTTParty.get(
-  "https://nytimes.wd5.myworkdayjobs.com/News",
-  :headers => headers
-)
-
-itemUrls = []
-
-linkJson = JSON.parse(jsonResponse.body)
-linkItems =  linkJson['body']['children'][0]['children'][0]['listItems']
-linkItems.each { |item|
-    itemUrls.append(item['title']['commandLink'])
-}
-
-puts(itemUrls)
+puts desc

@@ -1,8 +1,8 @@
 require 'watir'
+require 'json'
 
 def scrape_jobs_for_section(url, section_name, company, platform, browser)
 
-  require 'json'
   headers = {
     "Accept"  => "application/json,application/xml"
   }
@@ -36,10 +36,6 @@ def scrape_jobs_for_section(url, section_name, company, platform, browser)
       # Build job link from modifications to the scraped params above
       location_mod = location.tr(',','').gsub(/[^a-z]/i, '-')
       title_mod = title.gsub(/[^a-z]/i, '-')
-      #job_url = "https://nytimes.wd5.myworkdayjobs.com/en-US/#{section_name}/job/#{location_mod}/#{title_mod}_#{posting_code}"
-      #if posting_code.split("").last(2)[0] != "-"
-      #  job_url = job_url+"-1"
-      #end
       job_url = "https://nytimes.wd5.myworkdayjobs.com#{itemUrls[index]}"
 
       # Scrape the description text from the job url
@@ -71,12 +67,6 @@ def scrape_jobs_for_section(url, section_name, company, platform, browser)
       job.category = section_name
       job.location = location
 
-      puts '************'
-      puts job.url
-      puts job.desc
-      puts job.category
-      puts '************'
-
       # Save Job if not already in database
       if Job.where(:code => job.code, :company => job.company).blank?
         puts "Job doesn't exist. Save to DB."
@@ -90,10 +80,10 @@ end
 browser = Watir::Browser.new :chrome, headless: true
 
 jobs_section_urls = [
-  #["https://nytimes.wd5.myworkdayjobs.com/Marketing", "Marketing", "The New York Times", "Workday"]
-  ["https://nytimes.wd5.myworkdayjobs.com/Tech", "Tech", "The New York Times", "Workday"]
-  #["https://nytimes.wd5.myworkdayjobs.com/News", "News", "The New York Times", "Workday"],
-  #["https://nytimes.wd5.myworkdayjobs.com/DataInsights", "Data Insights", "The New York Times", "Workday"]
+  ["https://nytimes.wd5.myworkdayjobs.com/Marketing", "Marketing", "The New York Times", "Workday"],
+  ["https://nytimes.wd5.myworkdayjobs.com/Tech", "Tech", "The New York Times", "Workday"],
+  ["https://nytimes.wd5.myworkdayjobs.com/News", "News", "The New York Times", "Workday"],
+  ["https://nytimes.wd5.myworkdayjobs.com/DataInsights", "Data Insights", "The New York Times", "Workday"]
 ]
 
 jobs_section_urls.each { |section_array|
