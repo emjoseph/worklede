@@ -10,7 +10,7 @@
   <% else %>
     <div id="resumes_section" style="font-family: 'Avenir'; margin-bottom:16px;">
       <div style="color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Active Resumes</div>
-      You will receive tailored job listings to your email as soon as they're posted based on the content of this/these resume(s). Limited to companies in New York City for now.
+      You will receive tailored job listings to your email as soon as they're posted based on the content of this/these resume(s).
     </div>
     <table>
       <col width="240">
@@ -67,11 +67,13 @@
     <col width="350">
     <col width="250">
     <col width="250">
+    <col width="250">
     <col width="140">
     <tr>
       <th>Position</th>
       <th>Company</th>
       <th>Category</th>
+      <th>Location</th>
       <th>Days Posted</th>
     </tr>
     <% @latest_jobs.each do |job| %>
@@ -79,6 +81,7 @@
         <td><a href="<%= job.url%>" target="_blank"> <%= job.title %> </a></td>
         <td><%= job.company%></td>
         <td><%= job.category%></td>
+        <td><%= job.location%></td>
         <td><%= (Time.now - job.created_at).to_i / (24 * 60 * 60) + 1 + job.posted_days_ago_int%></td>
       </tr>
     <% end %>
