@@ -1,3 +1,29 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@bhsgsh10 
+emjoseph
+/
+worklede
+Private
+2
+0
+0
+ Code Issues 0 Pull requests 1 Actions Projects 0 Wiki Security Insights
+worklede/Gemfile.lock /
+@emjoseph emjoseph Scraping logic and models added
+0c2b03f 15 hours ago
+@emjoseph@bhsgsh10
+1285 lines (1281 sloc)  37.4 KB
+  
+Code navigation is available!
+Navigate your code with ease. Click on function and method calls to jump to their definitions or references in the same repository. Learn more
+
 GEM
   remote: https://rubygems.org/
   specs:
