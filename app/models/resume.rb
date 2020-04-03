@@ -2,7 +2,7 @@ require 'pp'
 
 class Resume < ApplicationRecord
   belongs_to :user
-  has_many :matches
+  has_many :matches, :dependent => :destroy
 
   def get_job_matches
       puts "Getting job matches"
