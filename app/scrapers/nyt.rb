@@ -1,9 +1,6 @@
-require 'rubium'
-require 'HTTParty'
 require 'watir'
 
-def scrape_jobs_for_section(section_url)
-  browser = Watir::Browser.new :chrome, headless: true
+def scrape_jobs_for_section(section_url, browser)
   browser.goto section_url
   sleep 2
 
@@ -50,6 +47,12 @@ def scrape_jobs_for_section(section_url)
       job.posted_days_ago_string = time
       job.posted_days_ago_int = time_int
       job.category = category
+      job.location = location
+
+      puts job.url
+      puts job.desc
+      puts job.company
+      puts job.category
 
       # Save Job if not already in database
       if Job.where(:code => job.code, :company => job.company).blank?
@@ -58,9 +61,10 @@ def scrape_jobs_for_section(section_url)
       else
         puts "This job is already in our DB."
       end
-
   end
 end
+
+browser = Watir::Browser.new :chrome, headless: true
 
 jobs_section_urls = [
   "https://nytimes.wd5.myworkdayjobs.com/marketing",
@@ -72,5 +76,5 @@ jobs_section_urls = [
 jobs_section_urls.each { |section_url|
    section = section_url.split("/").last
    puts "Scraping jobs for #{section}"
-   scrape_jobs_for_section(section_url)
+   scrape_jobs_for_section(section_url, browser)
 }

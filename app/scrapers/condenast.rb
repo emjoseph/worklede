@@ -1,4 +1,3 @@
-require 'HTTParty'
 require 'watir'
 
 def scrape_jobs_for_section(section_url)
@@ -51,6 +50,7 @@ def scrape_jobs_for_section(section_url)
       job.posted_days_ago_string = time
       job.posted_days_ago_int = time_int
       job.category = category
+      job.location = location
 
       # Save Job if not already in database
       if Job.where(:code => job.code, :company => job.company).blank?
