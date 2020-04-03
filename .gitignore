@@ -35,4 +35,5 @@
 yarn-debug.log*
 .yarn-integrity
 
-env.yaml
+/env.yaml
+/config/env.yml

@@ -15,8 +15,8 @@ class ResumesController < ApplicationController
       resume_file = params[:resume_file]
 
       # 1. Upload file to /public/uploads
-      puts(params.to_yaml)
-      puts(resume_file)
+      # puts(params.to_yaml)
+      # puts(resume_file)
       fileUploadPath = Rails.root.join('public', 'uploads', resume_file.original_filename)
 
       File.open(fileUploadPath, 'wb') do |file|
@@ -37,10 +37,7 @@ class ResumesController < ApplicationController
         # 3. Save resume s3 link on DB
         @resume.s3_link = s3Object.public_url
 
-        # 4. Delete file from public/uploads
-        File.delete(fileUploadPath) if File.exist?(fileUploadPath)
-
-        # 5. Send an email to user if resume is uploaded successfully
+        # 4. Send an email to user if resume is uploaded successfully
         @resume.save
         if @resume.save
             # Tell the UserMailer to send a welcome email after save
@@ -53,7 +50,25 @@ class ResumesController < ApplicationController
           redirect_to "/"
         end
 
+        # 5. Call Python script to get json string
+        json_str = `python3 resume_parser/resume_parser.py "#{fileUploadPath}"`
+        puts json_str
+        @resume.resume_txt = json_str
+        txtFileName = s3FileName
+        txtFileName.gsub! ".pdf", ".txt"
+        txtFileUploadPath = Rails.root.join('public', 'text-uploads', txtFileName)
+        File.write(txtFileUploadPath, json_str)
 
+        s3TxtFileName = SecureRandom.uuid + "-resumeInsights.txt"
+        s3TxtObject = s3.bucket('worklede').object(s3TxtFileName)
+        s3TxtObject.upload_file(txtFileUploadPath, acl:'public-read')
+
+        @resume.s3_txt_link = s3TxtObject.public_url
+        @resume.save
+
+        # 6. Delete text file if it exists in public/text-uploads
+        File.delete(fileUploadPath) if File.exist?(fileUploadPath)
+        File.delete(txtFileUploadPath) if File.exist?(txtFileUploadPath)
       end
     end
 

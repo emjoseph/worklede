@@ -66,10 +66,10 @@ Rails.application.configure do
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    :address              => "email-smtp.us-east-1.amazonaws.com",
+    :address              => "smtp.mailgun.org",
     :port                 => 587,
-    :user_name            => ENV['AWS_SES_SMTP_USERNAME'],
-    :password             => "BJ0mckQoAF6K1h3XJGJ6NuzygcPNw4X9WIcuURNbHsHp",
+    :user_name            => ENV['MAILGUN_USERNAME'],
+    :password             => ENV['MAILGUN_PASSWORD'],
     :authentication       => :login,
     :enable_starttls_auto => true,
   }
