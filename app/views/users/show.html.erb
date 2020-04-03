@@ -62,7 +62,27 @@
 </div>
 
 <div id="latest_section" style="font-family: 'Avenir'; margin-bottom:60px;">
-  <div style="margin-top: 30px; color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Latest Jobs</div>
+  <div style="margin-top: 30px; margin-bottom: 10px;color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Latest Jobs</div>
+  <table id="latest">
+    <col width="350">
+    <col width="250">
+    <col width="250">
+    <col width="140">
+    <tr>
+      <th>Position</th>
+      <th>Company</th>
+      <th>Category</th>
+      <th>Days Posted</th>
+    </tr>
+    <% @latest_jobs.each do |job| %>
+      <tr>
+        <td><a href="<%= job.url%>" target="_blank"> <%= job.title %> </a></td>
+        <td><%= job.company%></td>
+        <td><%= job.category%></td>
+        <td><%= (Time.now - job.created_at).to_i / (24 * 60 * 60) + 1 + job.posted_days_ago_int%></td>
+      </tr>
+    <% end %>
+  </table>
 
 </div>
 

@@ -142,6 +142,15 @@ td {
   text-align: center;
 }
 
+#latest td {
+  text-align: left !important;
+}
+
+#latest th {
+  text-align: left !important;
+}
+
+
 #index_banner {
   background: rgb(152,103,252);
   background: linear-gradient(180deg, rgba(152,103,252,1) 0%, rgba(35,83,210,1) 100%);
