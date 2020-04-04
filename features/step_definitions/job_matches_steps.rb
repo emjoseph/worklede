@@ -1,4 +1,4 @@
-Given("that I am logged into WorkLede") do
+Given("that I am signed into WorkLede") do
     user = User.new
     user.provider = "linkedin"
     user.id = 1
@@ -12,17 +12,20 @@ Given("that I am logged into WorkLede") do
     user.save
   
     page.set_rack_session(:user_id => 1)
+    visit "/"
+  end
+  
+  When("I upload a resume with a name and a file chosen") do
 
-  end
-  
-  When("I check my profile page") do
-  
-    visit "/"
+    attach_file('resume_file', "#{Rails.root}/features/files/resume.pdf")
+    fill_in 'resume_name', with: 'Bhaskar Resume'
+    click_button('submit_btn')
   
   end
   
-  Then("I'm able to see a job alerts section") do
+  Then("I'm able to see a job matches section") do
+    sleep(10)
     visit "/"
-    page.should have_content("Latest Jobs")
+    page.should have_content("Job Alerts")
   end
   
