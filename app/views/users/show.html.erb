@@ -10,7 +10,7 @@
   <% else %>
     <div id="resumes_section" style="font-family: 'Avenir'; margin-bottom:16px;">
       <div style="color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Active Resumes</div>
-      You will receive tailored job listings to your email as soon as they're posted based on the content of this/these resume(s).
+      You will receive tailored job listings to your email and here as soon as they're posted based on the content of this/these resume(s).
     </div>
     <table>
       <col width="240">
@@ -57,30 +57,38 @@
 
 
 <div id="alerts_section" style="font-family: 'Avenir'; margin-bottom:16px;">
-  <div style="margin-top: 30px; color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Job Alerts</div>
-  <table id="latest">
-    <col width="350">
-    <col width="250">
-    <col width="250">
-    <col width="250">
-    <col width="100">
-    <tr>
-      <th>Position</th>
-      <th>Company</th>
-      <th>Category</th>
-      <th>Location</th>
-      <th>Score</th>
-    </tr>
-    <% @job_matches.each do |match| %>
-      <tr>
-        <td><a href="<%= match.job.url%>" target="_blank"> <%= match.job.title %> </a></td>
-        <td><%= match.job.company%></td>
-        <td><%= match.job.category%></td>
-        <td><%= match.job.location%></td>
-        <td><%= match.score.round(2)%></td>
-      </tr>
-    <% end %>
-  </table>
+  <div style="margin-top: 30px; color: #4d4d4d; font-size: 20px; font-family: 'gilroyMedium';">Job Matches</div>
+
+  <% if @user.resumes.count == 0 %>
+    <div id="no_resumes_section" style="font-family: 'Avenir'">
+      No matches yet. Upload a resume to receive tailored job matches based on your resume to your email and here as soon as they're posted.
+    </div>
+  <% else %>
+      <table id="latest">
+        <col width="350">
+        <col width="250">
+        <col width="250">
+        <col width="250">
+        <col width="100">
+        <tr>
+          <th>Position</th>
+          <th>Company</th>
+          <th>Category</th>
+          <th>Location</th>
+          <th>Score</th>
+        </tr>
+        <% @job_matches.each do |match| %>
+          <tr>
+            <td><a href="<%= match.job.url%>" target="_blank"> <%= match.job.title %> </a></td>
+            <td><%= match.job.company%></td>
+            <td><%= match.job.category%></td>
+            <td><%= match.job.location%></td>
+            <td><%= match.score.round(2)%></td>
+          </tr>
+        <% end %>
+      </table>
+
+  <% end %>
 
 </div>
 
