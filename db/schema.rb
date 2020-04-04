@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2020_04_03_221846) do
   end
 
   add_foreign_key "jobs", "matches"
+  add_foreign_key "matches", "jobs"
   add_foreign_key "matches", "resumes"
   add_foreign_key "resumes", "users"
   add_foreign_key "users", "resumes", column: "resumes_id"

@@ -3,3 +3,5 @@
 
 const channels = require.context('.', true, /_channel\.js$/)
 channels.keys().forEach(channels)
+console.log('page is fully loaded');
+console.log("HELLO WORLD!")

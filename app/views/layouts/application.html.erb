@@ -7,17 +7,13 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
     <%= yield %>
   </body>
-  <script>
-    var form = document.forms[0]
-    form.addEventListener("submit", function(){
-      console.log("FORM FORM FORM")
-    }, false);
 
-  </script>
+
 
 </html>

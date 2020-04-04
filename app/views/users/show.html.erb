@@ -43,7 +43,7 @@
 
 
   <div style="color: #4d4d4d; font-size: 17px; font-family: 'gilroyBold'; margin-top: 20px"> Upload Resume </div>
-  <%= form_with(url: "/users/#{@user.id}/resumes/", multipart: true) do %>
+  <%= form_with(url: "/users/#{@user.id}/resumes/", multipart: true, :id => "submit_form")  do %>
       <%= label_tag(:resume_name, "Resume Name:", class: 'resume_form_label') %>
       <%= text_field_tag :resume_name, "", class: 'resume_text_field', placeholder: 'Enter Resume Name', id: 'resume_name_field' %>
       <br>
@@ -111,6 +111,5 @@
   </table>
 
 </div>
-
 
 </div>

@@ -1,4 +1,4 @@
 class Match < ApplicationRecord
-  belongs_to :resume, :dependent => :destroy
-  has_one :job
+  belongs_to :resume
+  has_one :job, :dependent => :destroy
 end
