@@ -14,4 +14,8 @@ class User < ActiveRecord::Base
       return matches
   end
 
+  def send_welcome_email
+    UserMailer.with(user:self).new_signup_email.deliver
+  end
+
 end

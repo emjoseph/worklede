@@ -8,4 +8,10 @@ class UserMailer < ApplicationMailer
         @url  = 'http://localhost:3000'
         mail(to: @user.email, subject: 'WorkLede: New Resume Uploaded')
     end
+
+    def new_signup_email
+        @user = params[:user]
+        @url  = 'http://localhost:3000'
+        mail(to: @user.email, subject: 'Welcome to WorkLede!')
+    end
 end

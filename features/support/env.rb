@@ -6,6 +6,8 @@
 
 require 'cucumber/rails'
 require "rack_session_access/capybara"
+require 'capybara/email'
+World(Capybara::Email::DSL)
 
 # frozen_string_literal: true
 

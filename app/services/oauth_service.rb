@@ -15,6 +15,7 @@ class OauthService
     else
       puts "New User Log In"
       oauth_account = User.create!(oauth_account_params)
+      oauth_account.send_welcome_email
     end
 
     puts "Returned User"
