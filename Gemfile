@@ -12,6 +12,7 @@ gem 'httparty'
 gem 'watir'
 gem 'sidekiq'
 gem 'jquery-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 # Use Puma as the app server
@@ -52,7 +53,7 @@ group :development do
 end
 
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# Windows does not include zomaneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :test do

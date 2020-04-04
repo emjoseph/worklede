@@ -41,10 +41,8 @@ class ResumesController < ApplicationController
         @resume.save
         if @resume.save
             # Tell the UserMailer to send a welcome email after save
-            puts "SENDING EMAIL"
             puts @user.email
             UserMailer.with(user: @user).new_resume_email.deliver
-            puts "SENT EMAIL"
             redirect_to "/"
         else
           redirect_to "/"

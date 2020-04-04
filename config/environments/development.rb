@@ -64,7 +64,6 @@ Rails.application.configure do
   host = 'worklede.com' #replace with your own url
   config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
 
-  # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
     :address              => "smtp.mailgun.org",
     :port                 => 587,
@@ -73,4 +72,5 @@ Rails.application.configure do
     :authentication       => :login,
     :enable_starttls_auto => true,
   }
+
 end

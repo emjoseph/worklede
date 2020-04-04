@@ -1,4 +1,4 @@
-Given("that I am signed into WorkLede") do
+Given("that I'm logged in and don't have a resume uploaded") do
     user = User.new
     user.provider = "linkedin"
     user.id = 1
@@ -15,7 +15,7 @@ Given("that I am signed into WorkLede") do
     visit "/"
   end
 
-  When("I upload a resume and wait for the page to reload") do
+  When("I upload a resume with a name and a file chosen") do
 
     attach_file('resume_file', "#{Rails.root}/features/files/resume.pdf")
     fill_in 'resume_name', with: 'Bhaskar Resume'
@@ -23,8 +23,8 @@ Given("that I am signed into WorkLede") do
 
   end
 
-  Then("I'll see a job match with a score") do
-    sleep(6)
+  Then("I'm able to see a job matches section") do
+    sleep(10)
     visit "/"
-    page.should have_content("Score")
+    page.should have_content("Job Matches")
   end
