@@ -1,4 +1,4 @@
-exit
+#exit
 require 'watir'
 require 'json'
 
@@ -24,11 +24,13 @@ def scrape_jobs_for_section(url, section_name, company, platform, browser)
   browser.goto url
   sleep 2
 
-  page = Nokogiri::HTML.parse(browser.html)
-  page.css('.WN0F').each_with_index do |posting, index|
+  #NOTE: Workday will often change the posting selecctor and the title and subheader selectors
 
-      title = posting.css('.WI2O')[1].text
-      subheader = posting.css('span.WB1F').text
+  page = Nokogiri::HTML.parse(browser.html)
+  page.css('.WC1F').each_with_index do |posting, index|
+      title = posting.css('.WM2O')[1].text
+      subheader = posting.css('span.WE1F').text
+
       posting_code = subheader.to_s.split('|')[0].strip
       location = subheader.to_s.split('|')[1].strip
       time = subheader.to_s.split('|')[2].strip

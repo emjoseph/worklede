@@ -14,4 +14,11 @@ class UserMailer < ApplicationMailer
         @url  = 'http://localhost:3000'
         mail(to: @user.email, subject: 'Welcome to WorkLede!')
     end
+
+    def new_matches_email
+        @user = params[:user]
+        @jobs = params[:jobs]
+        @url  = 'http://localhost:3000'
+        mail(to: @user.email, subject: 'WorkLede: Latest Job Matches')
+    end
 end

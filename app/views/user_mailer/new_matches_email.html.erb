@@ -1,0 +1,17 @@
+<h3>Good morning, <%= @user.first_name %></h3>
+<p>
+  Here are the latest jobs that could be a good fit for you:
+</p>
+<ul>
+<% @jobs.each do |job| %>
+  <div>
+      <b><a href="<%= job.url%>"><%= job.title%></a></b>
+      <br>
+      <%= job.company%>, <%= job.posted_days_ago_string%>
+      <br><br>
+  </div>
+
+<% end %>
+</ul>
+<p>Have any concerns? Write to us at dispatch@worklede.com</p>
+<p>Best, Team WorkLede</p>

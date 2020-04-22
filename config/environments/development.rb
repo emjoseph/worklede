@@ -64,13 +64,16 @@ Rails.application.configure do
   host = 'worklede.com' #replace with your own url
   config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
 
-  config.action_mailer.smtp_settings = {
-    :address              => "smtp.mailgun.org",
-    :port                 => 587,
-    :user_name            => ENV['MAILGUN_USERNAME'],
-    :password             => ENV['MAILGUN_PASSWORD'],
-    :authentication       => :login,
-    :enable_starttls_auto => true,
-  }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+
+  # config.action_mailer.smtp_settings = {
+  #   :address              => "smtp.mailgun.org",
+  #   :port                 => 587,
+  #   :user_name            => ENV['MAILGUN_USERNAME'],
+  #   :password             => ENV['MAILGUN_PASSWORD'],
+  #   :authentication       => :login,
+  #   :enable_starttls_auto => true,
+  # }
 
 end
