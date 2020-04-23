@@ -9,8 +9,7 @@ class Resume < ApplicationRecord
       scores = []
       jobs = []
 
-      Job.last(2).each { |job|
-
+      Job.all.each { |job|
         if Match.where(:resume_id => self.id, :job_id => job.id).blank?
             puts "Match does not exist..."
             score = `python3 nlp/match_score.py "#{job.desc}" "#{resume_text}"`

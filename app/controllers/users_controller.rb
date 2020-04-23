@@ -29,6 +29,12 @@ class UsersController < ApplicationController
       @latest_jobs = Job.order(:posted_days_ago_int).first(5)
       @user = User.find(id=params[:id])
       @job_matches = @user.get_best_matches
+
+      if @user.blank?
+        session.clear
+        redirect_to "/"
+      end
+
     else
       redirect_to "/"
     end

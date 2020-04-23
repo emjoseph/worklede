@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   def get_best_matches
       matches = []
       self.resumes.each{ |resume|
-          resume_matches = resume.matches.order(:score).last(2).reverse
+          resume_matches = resume.matches.order(:score).last(5).reverse
           resume_matches.each{ |match|
               match.job = Job.find(match.job_id)
               puts match.job
@@ -19,15 +19,16 @@ class User < ActiveRecord::Base
   def get_new_matches
     matches = []
     self.resumes.each { |resume|
-      resume_matches = resume.matches.where(didEmail: nil).order(:score).reverse
+      #resume_matches = resume.matches.where(didEmail: nil, ).order(:score).reverse
+      resume_matches = resume.matches.where(didEmail: nil).where('score > 0.88').order(:score).reverse
       matches = matches + resume_matches
     }
+    puts matches.length
     return matches
   end
 
   def send_email_with_new_job_matches
     matches = self.get_new_matches
-
     # No new matches -> nothing to email
     if matches.length == 0
       puts "No new matches - nothing to email"
