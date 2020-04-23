@@ -1,4 +1,4 @@
-exit
+#exit
 require 'watir'
 require 'json'
 

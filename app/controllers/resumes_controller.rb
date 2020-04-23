@@ -53,7 +53,7 @@ class ResumesController < ApplicationController
         puts json_str
         @resume.resume_txt = json_str
         @resume.save
-        @resume.get_job_matches_spacey
+        #@resume.get_job_matches_spacey
 
         # 6. Delete text file if it exists in public/text-uploads
         File.delete(fileUploadPath) if File.exist?(fileUploadPath)

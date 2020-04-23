@@ -30,9 +30,24 @@ class User < ActiveRecord::Base
     self.resumes.each { |resume|
       #resume_matches = resume.matches.where(didEmail: nil, ).order(:score).reverse
       resume_matches = resume.matches.where(didEmail: nil).where('score > 0.88').order(:score).reverse
-      matches = matches + resume_matches
+
+      resume_matches.each{ |match|
+          match.job = Job.find(match.job_id)
+      }
+
+      # Filter out matches with old jobs
+      date_filtered_matches = []
+      resume_matches.each{ |match|
+        if match.job.posted_days_ago_int < 10
+          date_filtered_matches = date_filtered_matches + [match]
+        end
+      }
+
+      matches = matches + date_filtered_matches
     }
+    puts "YOLO"
     puts matches.length
+    puts matches
     return matches
   end
 
