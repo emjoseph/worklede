@@ -5,11 +5,20 @@ class User < ActiveRecord::Base
       matches = []
       self.resumes.each{ |resume|
           resume_matches = resume.matches.order(:score).last(5).reverse
+
           resume_matches.each{ |match|
               match.job = Job.find(match.job_id)
-              puts match.job
           }
-          matches = matches + resume_matches
+
+          # Filter out matches with old jobs
+          date_filtered_matches = []
+          resume_matches.each{ |match|
+            if match.job.posted_days_ago_int < 20
+              date_filtered_matches = date_filtered_matches + [match]
+            end
+          }
+
+          matches = matches + date_filtered_matches
       }
       return matches
   end

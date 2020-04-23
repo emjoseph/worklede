@@ -26,13 +26,16 @@ class UsersController < ApplicationController
 
   def show()
     if session[:user_id].to_i == params[:id].to_i
-      @latest_jobs = Job.order(:posted_days_ago_int).first(5)
-      @user = User.find(id=params[:id])
-      @job_matches = @user.get_best_matches
 
-      if @user.blank?
+      puts "AA"
+      if not User.exists?(params[:id])
+        puts "BB"
         session.clear
         redirect_to "/"
+      else
+        @latest_jobs = Job.order(:posted_days_ago_int).first(5)
+        @user = User.find(id=params[:id])
+        @job_matches = @user.get_best_matches
       end
 
     else

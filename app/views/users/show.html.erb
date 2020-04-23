@@ -70,11 +70,13 @@
         <col width="250">
         <col width="250">
         <col width="100">
+        <col width="100">
         <tr>
           <th>Position</th>
           <th>Company</th>
           <th>Category</th>
           <th>Location</th>
+          <th>Days Ago</th>
           <th>Score</th>
         </tr>
         <% @job_matches.each do |match| %>
@@ -83,6 +85,7 @@
             <td><%= match.job.company%></td>
             <td><%= match.job.category%></td>
             <td><%= match.job.location%></td>
+            <td><%= (Time.now - match.job.created_at).to_i / (24 * 60 * 60) + 1 + match.job.posted_days_ago_int%></td>
             <td><%= match.score.round(2)%></td>
           </tr>
         <% end %>
