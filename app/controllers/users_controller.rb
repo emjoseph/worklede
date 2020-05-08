@@ -27,9 +27,7 @@ class UsersController < ApplicationController
   def show()
     if session[:user_id].to_i == params[:id].to_i
 
-      puts "AA"
       if not User.exists?(params[:id])
-        puts "BB"
         session.clear
         redirect_to "/"
       else

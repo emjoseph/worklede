@@ -63,8 +63,6 @@ class ResumesController < ApplicationController
 
     private
       def resume_params
-        puts "RESUME PARAMS METHOD"
-        puts params
         params.require(:user).permit(:resume_file, :resume_name)
       end
 end

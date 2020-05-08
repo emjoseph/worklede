@@ -52,11 +52,9 @@ Given("that I have created an account and have upload a resume") do
   SEO experience and a strong social media presence are a plus. This role will
   not involve travel."
   job2.save
-
-
 end
 
-When("I check my email after matches have been processed") do
+When("I check my email") do
   @user.resumes.first.get_job_matches_spacey
   @user.send_email_with_new_job_matches_test
   sleep 5.0
