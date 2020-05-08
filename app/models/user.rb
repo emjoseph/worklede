@@ -51,8 +51,59 @@ class User < ActiveRecord::Base
     return matches
   end
 
+  def get_new_matches_score_agnostic_for_testing
+    matches = []
+    self.resumes.each { |resume|
+      #resume_matches = resume.matches.where(didEmail: nil, ).order(:score).reverse
+      resume_matches = resume.matches.where(didEmail: nil).order(:score).reverse
+
+      resume_matches.each{ |match|
+          match.job = Job.find(match.job_id)
+      }
+
+      # Filter out matches with old jobs
+      date_filtered_matches = []
+      resume_matches.each{ |match|
+        if match.job.posted_days_ago_int < 30
+          date_filtered_matches = date_filtered_matches + [match]
+        end
+      }
+
+      matches = matches + date_filtered_matches
+    }
+    puts "YOLO"
+    puts matches.length
+    puts matches
+    return matches
+  end
+
   def send_email_with_new_job_matches
     matches = self.get_new_matches
+    # No new matches -> nothing to email
+    if matches.length == 0
+      puts "No new matches - nothing to email"
+      return
+    end
+
+    # Get jobs from new matches
+    jobs = []
+    matches.each {|match|
+        job = Job.find(match.job_id)
+        puts job
+        jobs = jobs + [job]
+    }
+
+    UserMailer.with(user:self, jobs: jobs).new_matches_email.deliver
+
+    # Mark matches as emailed
+    matches.each {|match|
+        match.didEmail = true
+        match.save
+    }
+  end
+
+  def send_email_with_new_job_matches_test
+    matches = self.get_new_matches_score_agnostic_for_testing
     # No new matches -> nothing to email
     if matches.length == 0
       puts "No new matches - nothing to email"

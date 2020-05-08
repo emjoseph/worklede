@@ -5,14 +5,16 @@ class Resume < ApplicationRecord
   def get_job_matches_spacey
       puts self.resume_txt
       resume_json = JSON.parse(self.resume_txt)
-      resume_text = resume_json['text']
+      resume_nouns = resume_json['nouns']
+      resume_noun_string = resume_nouns.join(' ')
+      puts resume_noun_string
       scores = []
       jobs = []
 
       Job.all.each { |job|
         if Match.where(:resume_id => self.id, :job_id => job.id).blank?
             puts "Match does not exist..."
-            score = `python3 nlp/match_score.py "#{job.desc}" "#{resume_text}"`
+            score = `python3 nlp/match_score.py "#{job.desc}" "#{resume_noun_string}"`
             scores.append(score)
             jobs.append(job)
 
