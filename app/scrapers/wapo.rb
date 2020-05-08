@@ -1,4 +1,5 @@
 #exit
+puts "WAPO SCRAPING STARTED"
 require 'watir'
 require 'json'
 

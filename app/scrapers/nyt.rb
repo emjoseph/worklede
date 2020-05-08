@@ -1,4 +1,5 @@
 #exit
+puts "NYT SCRAPING STARTED"
 require 'watir'
 require 'json'
 

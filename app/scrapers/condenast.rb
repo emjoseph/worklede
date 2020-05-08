@@ -1,4 +1,5 @@
 #exit
+puts "CONDE NAST SCRAPING STARTED"
 require 'watir'
 require 'json'
 

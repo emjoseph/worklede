@@ -9,6 +9,3 @@ Scenario: User receives an email saying he has signed up for WorkLede
     Given that I have signed in using LinkedIn for the first time
     When I successfully login
     Then I will receive an email saying that I have signed up for WorkLede
-
-
-# this feature is in the works.
