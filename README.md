@@ -11,6 +11,8 @@ WorkLede (pronounced Work-Lead) is platform that allows journalists to upload th
 - `rake db:migrate`
 - `rails server`
 
+Note: Right now we've set up our database.yml file so that our development database actually connects to our production PostgresSQL database on Heroku. If you're a TA grading this, make sure to run the app from the zipped file directory we've attached. This GitHub repo does not contain the `env.yml` file that contains the keys required to connect to our Heroku database, AWS services, LinkedIn LogIn app, and MailGun email delivery endpoint.
+
 ### Deploying WorkLede
 Run migrations on production database  
 - `heroku run rake db:migrate`
@@ -51,26 +53,3 @@ We use Python to parse our PDFs and perform NLP entity extraction and document s
 2. heroku/python
 3. heroku/ruby
 ```
-
-
-
-## Iteration 2 Updates
-- Email delivery is live
-- Site is available at www.worklede.com
-- Several more user tests, in particular for testing email delivery
-- Three scrapers actively pulling jobs from the New York Times, Washington Post, and Conde Nast. We're running these locally from our computers but synced to the production DB for now. Our next push on this end will be to set up a SideKiq worker/cron to periodically scrape the companies of interest.
-- New Latest Jobs Listing
-- New Job Matches Scoring System - Calculated via Python Spacy Document Similarity (Cosine Similarity) scoring. This happens in real-time when a user submits a new resume. Like with our scrapers, our next task will be to set up a SideKiq worker/cron to periodically score resumes against new jobs that have come in.
-- New Resume Parsing Logic - Done via Python Spacy Entity Recognition
-
-
-
-## Scrapers ()
-Run scraper scripts via cron jobs with the following command:  
-`rails runner app/scrapers/nyt.rb`
-
-
-
-## Deploy
-`heroku run rake db:migrate`
-`git push heroku master`
