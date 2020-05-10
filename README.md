@@ -39,6 +39,8 @@ This worker invokes three separate scraping scripts that pull the latest jobs fr
 
 **Important:** The websites that we scrape periodically update their HTML and thus our scraping scripts may require tweaking if they suddenly seem to stop working. But the general framework for scraping has been provided and only very minor adjustments - usually CSS class selectors - need to be updated.
 
+**Important:** We're using the Watir gem that requires a Chrome driver to scrape websites. The Chrome driver can be installed here: http://watir.com/guides/drivers/. This should work fine locally once the Chromed driver is installed. When running on Heroku, make sure to add the required buildpacks which can be accessed here: https://github.com/heroku/heroku-buildpack-chromedriver
+
 #### Resume-Job Matching `rake 'workers:score_new_jobs'` 
 This worker runs a script that calculates the matches for new jobs against every resume available in our database.
 
@@ -46,10 +48,13 @@ This worker runs a script that calculates the matches for new jobs against every
 This worker runs a script that sends users an email of the latest relavant job postings.
 
 ### Running Python Scripts
-We use Python to parse our PDFs and perform NLP entity extraction and document similarity calculations to find matches between resumes and job descriptions. If running WorkLede locally, just make sure you have Python3 and the all libraries described in `requirements.txt` installed. If deploying to Heroky, make sure to install the Python Heroku Build Pack. Here is our current build pack stack for reference:
+We use Python to parse our PDFs and perform NLP entity extraction and document similarity calculations to find matches between resumes and job descriptions. If running WorkLede locally, just make sure you have Python3 and the all libraries described in `requirements.txt` installed. If deploying to Heroku, make sure to add the Python Heroku Build Pack as well as the other buildpacks listed below. Here is our current build pack stack for reference:
 ```
 === serene-inlet-00774 Buildpack URLs
 1. https://github.com/heroku/heroku-buildpack-activestorage-preview
 2. heroku/python
 3. heroku/ruby
+4. https://github.com/heroku/heroku-buildpack-chromedriver
+5. https://github.com/heroku/heroku-buildpack-google-chrome
+6. https://github.com/heroku/heroku-buildpack-xvfb-google-chrome
 ```
