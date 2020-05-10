@@ -1,8 +1,48 @@
 # README
-
-Software Engineering - Iteration 1
-Bhaskar Ghosh (bg2625)
+COMS 4156, Advanced Software Engineering  - Final Submission  
+Bhaskar Ghosh (bg2625)  
 Eugene M. Joseph (emj2152)
+
+## WorkLede
+WorkLede (pronounced Work-Lead) is platform that allows journalists to upload their resumes and receive daily email alerts for new relevent job postings.
+
+### Running WorkLede Locally
+- `bundle install`
+- `rake db:migrate`
+- `rails server`
+
+### Deploying WorkLede
+Run migrations on production database  
+- `heroku run rake db:migrate`
+
+Commit latest updates  
+- `git add .`  
+- `git commit -m 'Update Description'`  
+
+Push latest commits to Heroku   
+- `git push heroku master`
+
+### Workers
+
+#### Local Workers
+To run workers locally, start a Sidekiq server via the `sidekiq` command in terminal. Once the Sidekiq server has started, you can send it commands via the following syntax: `rake 'workers:score_new_jobs'`. So in this case, we're calling the **score_new_jobs worker** which will be run on the Sidekiq server. Crons can be specified to run workers at the desired intervals inside the `schedule.rb` file, although we've disabled these calls as we run our workers in production via the **Heroku Scheduler** add-on.
+
+#### Production Workers
+For our production server, workers are being scheduled via the **Heroku Scheduler**. Here is an image of our current setup:
+![alt text](https://worklede-12.s3.amazonaws.com/worklede_heroku.png "Heroku Scheduler Setup")
+
+
+#### Scrapers `rake 'workers:scrape_new_jobs'`  
+This worker invokes three separate scraping scripts that pull the latest jobs from the New York Times, Washington Post, and Conde Nast into our database.  
+
+**Note:** The websites that we scrape constantly update their HTML and thus our scraping scripts may require tweaking if they suddenly seem to stop working.
+
+#### Resume-Job Matching `rake 'workers:score_new_jobs'` 
+This worker runs a script that calculates the matches for new jobs against every resume available in our database.
+
+#### Emails `rake 'workers:send_match_emails'` 
+This worker runs a script that sends users an email of the latest relavant job postings.
+
 
 ## Iteration 2 Updates
 - Email delivery is live
@@ -15,7 +55,7 @@ Eugene M. Joseph (emj2152)
 
 
 
-## Scrapers
+## Scrapers ()
 Run scraper scripts via cron jobs with the following command:  
 `rails runner app/scrapers/nyt.rb`
 
