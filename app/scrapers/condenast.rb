@@ -28,9 +28,11 @@ def scrape_jobs_for_section(url, section_name, company, platform, browser)
 
   #NOTE: Workday will often change the posting selecctor and the title and subheader selectors
   page = Nokogiri::HTML.parse(browser.html)
-  page.css('.WC1F').each_with_index do |posting, index|
-      title = posting.css('.WB3O')[1].text
-      subheader = posting.css('span.WE1F').text
+  page.css('.WL2F').each_with_index do |posting, index|
+      title = posting.css('.WM4O')[0].text
+      puts title
+      subheader = posting.css('span.WI2F').text
+      puts subheader
       posting_code = subheader.to_s.split('|')[0].strip
       location = subheader.to_s.split('|')[1].strip
       time = subheader.to_s.split('|')[2].strip

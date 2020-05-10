@@ -45,7 +45,6 @@ class User < ActiveRecord::Base
 
       matches = matches + date_filtered_matches
     }
-    puts "YOLO"
     puts matches.length
     puts matches
     return matches
@@ -71,7 +70,6 @@ class User < ActiveRecord::Base
 
       matches = matches + date_filtered_matches
     }
-    puts "YOLO"
     puts matches.length
     puts matches
     return matches

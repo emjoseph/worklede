@@ -19,6 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.minute do
-  rake 'workers:send_match_emails'
-end
+#every 1.minute do
+#  rake 'workers:send_match_emails'
+#end
