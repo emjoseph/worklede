@@ -6,7 +6,7 @@ pycryptodome==3.9.7
 cymem==2.0.3
 requests==2.22.0
 numpy==1.18.1
-urllib3==1.25.8
+urllib3==1.26.5
 wasabi==0.6.0
 tqdm==4.45.0
 plac==1.1.3
